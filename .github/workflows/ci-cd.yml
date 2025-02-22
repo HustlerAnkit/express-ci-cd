@@ -10,13 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Operating System
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3 # This action checks out your repository so your workflow can access it
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v3 # This action sets up a version of Node.js for use in actions by adding to PATH
         with:
           node-version: 18
 
@@ -29,10 +29,10 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' # Only deploy when the main branch is updated
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v3 # This action checks out your repository so your workflow can access it
 
       - name: Set up Node.js
         uses: actions/setup-node@v3
@@ -40,7 +40,8 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install --production
+        run: npm install --production # Install only production dependencies
+
 
       # - name: Deploy to Server
       #   env:
