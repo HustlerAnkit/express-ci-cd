@@ -42,18 +42,17 @@ jobs:
       - name: Install dependencies
         run: npm install --production # Install only production dependencies
 
-
-      # - name: Deploy to Server
-      #   env:
-      #     SSH_HOST: ${{ secrets.SSH_HOST }}
-      #     SSH_USER: ${{ secrets.SSH_USER }}
-      #     SSH_KEY: ${{ secrets.SSH_KEY }}
-      #   run: |
-      #     echo "$SSH_KEY" > deploy_key.pem
-      #     chmod 600 deploy_key.pem
-      #     ssh -i deploy_key.pem -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
-      #       cd /var/www/express
-      #       git pull origin main
-      #       npm install --production
-      #       pm2 restart all
-      #     EOF
+      - name: Deploy to Server
+        env:
+          SSH_HOST: ${{ secrets.SSH_HOST }}
+          SSH_USER: ${{ secrets.SSH_USER }}
+          SSH_KEY: ${{ secrets.SSH_KEY }}
+        run: |
+          echo "$SSH_KEY" > deploy_key.pem
+          chmod 600 deploy_key.pem
+          ssh -i deploy_key.pem -o StrictHostKeyChecking=no $SSH_USER@$SSH_HOST << 'EOF'
+            cd /var/www/express
+            git pull origin main
+            npm install --production
+            pm2 restart all
+          EOF
